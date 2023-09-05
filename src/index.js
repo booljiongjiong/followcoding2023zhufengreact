@@ -1,17 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './index.less'
+
+// import 'react-app-polyfill/ie9';
+// import 'react-app-polyfill/ie11';
+// import 'react-app-polyfill/stable';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <div>啊啊啊啊啊啊啊啊</div>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// 因为webpackDevserver.config.js中配置了先查找在项目目录下查找是否存在setupProxy.js文件，如果有的话，则会使用中间件启用我们写好的代理配置
+fetch('/jian/recommended?seen_ids=&count=5&only_unfollowed=true').then(res => {
+  console.log(2222)
+    return res.json();
+}).then(val => {
+  console.log(val);
+})
