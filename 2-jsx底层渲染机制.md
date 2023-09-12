@@ -128,8 +128,8 @@
             - 普通函数： 执行这个函数，并把props传递给函数
             - 构造函数：把构造函数基于new执行（创建一个类的实例），同时传递props
     2. 从调用类组件new DemoComponent({...})开始，类组件内部发生的事情：
-        - 初始化属性 & 设置规则校验(添加静态属性static defaultProps和static propTypes)
-        - 初始化状态
+        1. 初始化属性 & 设置规则校验(添加静态属性static defaultProps和static propTypes)
+        2. 初始化状态
             - 状态： 后期修改状态， 可以触发试图的更新
             - 需要手动初始化，如果没有手动初始化， 会默认在实例上挂载一个state属性，初始值是null
             ```
@@ -149,9 +149,64 @@
                     }
                 }
             ``` 
-            - 修改状态，更新视图
+            - 修改状态， 更新视图
                 - this.state.xxx = xxx 这种只能修改实例的state值， 并不能更新视图
                 - 想要视图更新，我们需要基于`React.Component.prototype`提供的方法操作
                     - 第一种： `this.setState(partialState)`
                         - partialState: 部分状态
+                        - this.setState({
+                            xxx:xxxx
+                        })
+                    - 第二种： `this.forceUpdate()` 强制更新
+    3. `类组件第一次渲染的底层逻辑`
+        1. 触发`componentWillMount`周期钩子函数
+            - 这个周期函数是不安全的，不建议使用
+            - 目前可以使用， 但是控制台会抛出黄色警告
+            - 不想要这个黄色警告的话， 可以暂时在这个钩子函数名称前面加上`UNSAFE_`
+            - 但是如果开启了`React.StrictMode`模式，即便加了前缀控制台也会抛出红色错误
+            - 这个`componentWillMount`会在第一次渲染之前执行（会在第一次执行render函数之前执行）
+        2. 执行`render`周期函数, 进行渲染
+        3. 执行`componentDidMount`周期函数
+            - 第一次渲染完成，已经把virtualDOM变为真实DOM了，所以这个阶段可以获取到真实DOM了
+    4. `组件更新的逻辑`:
+        - 当在组件内部修改了组件状态state，组件会更新
+            1. 触发`shouldComponentUpdate(nextProps, nextState)`周期函数
+                - nextState存储要修改的最新状态， 此时this.state还是修改前的状态还没有改变
+                - shouldComponentUpdate这个周期函数需要返回true/false
+                    - true: 允许更新，会继续执行下一个操作
+                    - false: 不允许更新， 接下来啥都不处理
+            2. 触发`componentWillUpdate(nextProps， nextState)`
+                - 这个阶段this.state也还没有被改变
+            3. 修改this.state/属性值为最新的
+            4. 触发render周期函数：组件更新
+                - 按照最新的状态、属性值，把返回的JSX编译为virtualDOM
+                - 把和上一次渲染出来的virtualDOM改进型对比DOM_DIFF
+                - 把差异的部分进行渲染，渲染成真实的DOM
+            5. 触发`componetDidUpdate`周期函数
+        - 当父组件更新，触发了子组件的更新
+            1. 触发子组件的`componentWillReceiveProps(nextProps)`
+            2. 触发`shouldComponentWillUpdate`
+            3. 触发`componentWillUpdate`
+            4. 修改状态state/属性值
+            4. 触发`render`
+            4. 触发`componentDidUpdate`
+        - 特殊说明：如果是基于`this.forceUpdate()`进行强制视图更新，会**跳过shouldComponetUpdate**周期函数的校验， 直接从**componentWillUpdate**开始进行更新，也就是说一定会进行视图更新
+        - `深度优先原则`：父组件在操作中，遇到子组件，一定是把子组件操作完毕，才会继续父组件的后续操作
+            - 父组件第一次渲染：
+                - 父willmount  -->
+                - 父render  -->
+                    - 子willmount -> 子render -> 子didmount
+                - 父didmount
+            - 父组件更新
+                - 父shouldUpdate  -->
+                - 父willUpdate  -->
+                - 父render  -->
+                    - 子willReceiveProps -> 子shouldUpdate -> 子willUpdate -> 子render -> 子didUpdate
+                - 父didUpdate
+    5. react生命周期
+        ![react生命周期](./followPic/react-hook.png)
+    
+                    
+
+                    
 
