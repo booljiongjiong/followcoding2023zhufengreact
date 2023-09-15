@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.less'
-import Demo from './Demo3';
+import Demo from './Demo8';
 
 // import 'react-app-polyfill/ie9';
 // import 'react-app-polyfill/ie11';
