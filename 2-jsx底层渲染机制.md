@@ -205,7 +205,7 @@
                 - 父didUpdate
                 - [父setState.callback]
 6. react生命周期
-        ![react生命周期](./followPic/react-hook.png)
+        ![react生命周期](./followPic/react-生命周期.png)
 7. 函数组件是静态组件， 类组件是动态组件
         - 静态组件：组件第一次渲染完毕后，无法基于'内部的某些操作'让组件自更新， 但是如果调用他的父组件更新了， 那么相关的子组件如果用到了相关改变的props也会跟着更新
             - 函数组件具备：属性，其他状态等几乎没有
