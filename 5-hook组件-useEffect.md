@@ -8,7 +8,7 @@
     - **第一次渲染完毕后会执行callBack**
     - 当依赖的状态值(或者多个以来状态中的一个)发生改变，也会触发callBack，依赖状态都没有改变则不会触发callback的执行
 4. `useEffect(() => {... return () => {...} ... })`
-    - 如果useEffect的callBack里面返回了一个函数(暂且叫做小函数)，这个函数会在组件'释放'的时候执行(并非真的是释放了，在组件更新的时候的上一次视图类似于被释放，其实并没有)
+    - 如果useEffect的callBack里面返回了一个函数(暂且叫做小函数)，这个小函数会在组件'释放'的时候执行(并非真的是释放了，在组件更新的时候的上一次视图类似于被释放，其实并没有)
         - 第一次渲染的时候返回这个小函数，在后面的每一次更新的时候都**先**执行上一次返回的这个小函数，也就是说在小函数中获取到的state都是上一次的值，再去执行其他的useEffect
 5. 首次渲染会通过`MountEffect`方法把函数组件中的所有useEffect的callback放入到`effect链表`中，当视图渲染完毕，会基于`UpdateEffect`方法，通知effect链表中的callback执行(这些callBack执行时候获取到的state是最新的)。在这些useEffect的callback执行前，会先执行这些callback里面返回的小函数(这些小函数执行时候获取到的是上一次的state,因为小函数的执行上下文是在上一次哦)
     ![useEffect处理机制](./followPic/useEffect处理机制.png)
