@@ -119,7 +119,7 @@
                         });
                     };
                 },
-                // dispacth如果没有redux-promise中间件的话，这个oppose是不能直接加async变成异步操作的,会报错，因为promise实例是一个对象，没有type属性，所以匹配不到任何reducer的操作，会报错
+                // dispacth如果没有redux-promise中间件的话，这个oppose是不能直接加async变成异步操作的,会报错，因为promise实例是一个对象，没有type属性，所以匹配不到任何reducer的操作，会报错。（要么是个包含type属性的对象，要么是个同步函数）
                 // 因为异步函数执行返回的是一个promise实例
                 async oppose(){
                     await delay(1000);
@@ -134,4 +134,5 @@
                 - 第一次派发用的是重写后的dispatch，这个方法不会校验对象是否有type属性，也不在乎传递的对象是否为标准普通对象，此次派发只是为了第二次派发做准备
                 - redux-thunk：把返回的函数执行，然后这个函数里面我们手动调用了真正的dispatch，并执行真正的业务派发逻辑。要求最外层的派发函数(比如support函数)必须是普通函数，这个普通函数返回的是一个异步函数，在这个异步函数里面做一些业务异步逻辑处理后，手动调用真正的dispatch进行派发
                 - redux-promise：监听返回的promise实例，在实例完成后，需要基于真正的dispatch，把成功的结果，再进行派发。使用了resux-promise中间件，就可以直接把最外层的派发函数(比如oppose函数)变成异步函数了，在这个异步函数里面直接做业务异步逻辑，最后返回action对象即可，redux-promise会自动帮我们进行派发操作
-
+5. 利用react-redux实现组件间通信和数据的存储
+    - 项目练习：第66节课视频 
