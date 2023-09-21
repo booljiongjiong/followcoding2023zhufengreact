@@ -1,9 +1,10 @@
 1. mbox: 状态管理库
-    - mbox5: 5及以上版本运行在支持ES6 P  roxy的浏览器
-    - mbox4: 运行在ES5的浏览器，跟5的API相同
+    - mbox5: 5及以上版本运行在支持ES6 P  roxy的浏览器  ->  安装包`mbox`5 和 `mbox`6
+    - mbox4: 运行在ES5的浏览器，跟5的API相同          -> 安装包`mbox`6 和 `mbox`7
     - mbox6: 移除了装饰器的操作(装饰器不是JS标准规范)
 2. mbox5
     1. 想要使用mbox5, 需要让项目支持JS装饰器语法
+        - 安装`mbox`5 和 `mbox`6
         - 安装`@babel/plugin-proposal-decorators`和`@babel/plugin-proposal-class-properties`
         - package.json中的babel的plugins需要添加配置
             ![packageJson中修改babel的plugin来支持装饰器](./followPic/packageJson中修改babel的plugin来支持装饰器.png)
@@ -224,3 +225,11 @@
             ![mbox-在函数组件中的使用1](./followPic/mbox-在函数组件中的使用1.png)
             ![mbox-在函数组件中的使用2](./followPic/mbox-在函数组件中的使用2.png)
             ![mbox-在函数组件中的使用3](./followPic/mbox-在函数组件中的使用3.png)
+3. mbox6
+    1. 安装包`mbox`6 和 `mbox`7
+        - 因为mbox6去除了装饰器
+        - 不用安装安装`@babel/plugin-proposal-decorators`和`@babel/plugin-proposal-class-properties`
+        - package.json中的babel的plugins也不需要添加上述配置
+    2. 基于`makeObservable`和`makeAutoObservable`
+        - 相对于mbox5, 只需要去除装饰器@xxx的写法就行了，类组件中应该不行，改用函数组件
+            ![mbox6的使用](./followPic/mbox6的使用.png)
