@@ -212,7 +212,7 @@
         store.change();
         ```
     5. 基于mbox5实战
-        - 参见day1210下面的src代码
+        - 参见目录‘src-mbox5实战应用’下面的src代码
         - 创建各个模块自己的Store, 需要在构造函数中接收传递进来的根Store实例 比如 day1210\src\store\TaskStore.js
             ![mbox-各个模块创建自己的Store](./followPic/mbox-各个模块创建自己的Store.png)
         - 在根Store文件中，实例化各个模块自己的Store,然后把跟Store实例传递给各个模块自己的Store
