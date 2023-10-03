@@ -172,7 +172,7 @@ React样式私有化，有以下几种方法：
     - `HOC：React高阶组件 --> 利用JS中的闭包(柯理化函数)实现的组件代理`
         - 对于类组件中的createUseStyles()产生的useStyles对象不能在类组件中使用的问题，我们可以在代理组件中，经过业务逻辑的处理，获取一些信息，最后基于属性等方案，传递给我呢吧最终要渲染的组件
 5. styled-components
-    - 首先安装styled-components这个包
+    - 首先安装`styled-components`这个包
     - 如果编写样式的时候没有提示，可以在vscode中安装官方插件vscode-styled-components
     ![React样式私有化-styled-components](./followPic/React样式私有化-styled-components.png)
 
