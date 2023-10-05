@@ -112,7 +112,7 @@
         - 在render函数中可以做一些操作: 例如登录状态监测等
     - `Link`：实现路由切换/跳转的组件
         - 最后渲染完毕的结果依然是a标签
-        - 特可以根据路由模式,自动设定点击a标签切换的方式
+        - 也可以根据路由模式,自动设定点击a标签切换的方式
     - `Switch`: 确保路由中, 只要有一项匹配,则不再继续向下匹配, `exact`:设置匹配模式为精准匹配
     - `Redirect` 路由匹配不到的时候,可以重定向到首页或者指定页面 from to exact
     ```
@@ -159,7 +159,7 @@
                     <Router exact path='/' component={A} />
                     <Router path='/b' component={B} />
                     <Router path='/c' render= { () => {
-                        // 当路由地址匹配后先执行render函数,返回的值就是我们需要渲染的内容, 在此函数中,我们可以处理一些事情:登陆状态检验...
+                        // 当路由地址匹配后先执行render函数,返回的值就是我们需要渲染的内容, 在此函数中,我们可以处理一些事情:登陆状态检验,props传递history/location/match信息给组件,路由懒加载时候用suspence包裹要返回的组件等...
                         if(isLogin){
                             return { C }
                         }else{
