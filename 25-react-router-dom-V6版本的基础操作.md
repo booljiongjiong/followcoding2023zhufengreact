@@ -16,7 +16,7 @@
     - 在组件A.jsx中不再需要手动配置二级/子级路由了,只需要在渲染子级路由页面的地方放入`<Outlet />`这个`路由容器`,表示用来渲染二级/子级路由匹配的内容
 ```
 // 1. 修改@/App.jsx
-import { HashRouter, Route, Switch, Redirct, Link } from 'react-router-dom'
+    import { HashRouter, Routes, Route } from 'react-router-dom'
 
     import A from './views/A'
     import B from './views/B'
@@ -31,7 +31,7 @@ import { HashRouter, Route, Switch, Redirct, Link } from 'react-router-dom'
         // 写a标签的样式
         ...
     `
-    const A = function A(){
+    const App = function App(){
         return <HashRouter>
             <HomeHead />
             <div class='content'>
@@ -55,9 +55,10 @@ import { HashRouter, Route, Switch, Redirct, Link } from 'react-router-dom'
             </div>
         </HashRouter>
     }
+    export default App;
 
     // 2. 修改@/views/A.jsx
-   import React from 'react';
+    import React from 'react';
     import { Link, Outlet } from 'react-router-dom';
     import styled from 'styled-components'
     const DemoBox = styled.div`
