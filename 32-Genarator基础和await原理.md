@@ -23,20 +23,20 @@
         ```
 4. Generator生成器函数的作用:
     - 可以基于返回的itor(迭代器对象),基于next方法, 控制函数体中的代码,一步步的去执行
-    - 每一次执行next, 控制函数体中的代码执行, 直到遇到yeild则暂停执行下面的代码,等待下一个next被调用,然后从上一次暂停的位置开始执行
-        - itor.next() // {done:true/false, value: yeild后面的值}
+    - 每一次执行next, 控制函数体中的代码执行, 直到遇到yield则暂停执行下面的代码,等待下一个next被调用,然后从上一次暂停的位置开始执行
+        - itor.next() // {done:true/false, value: yield后面的值}
     - 直到遇到函数体的return或者已经执行到函数最末尾的位置了, 返回 {done:true, value: 函数返回值或者undefined}
     ```
-    // 1. 生成器函数和yeild执行流程
+    // 1. 生成器函数和yield执行流程
     const fn = function* () {
         console.log('a');
-        yeild 1;
+        yield 1;
         
         console.log('b');
-        yeild 2;
+        yield 2;
 
         console.log('c');
-        yeild 3;
+        yield 3;
     }
 
     let itor = fn();
@@ -50,13 +50,13 @@
     // 2. itor.throw('哈哈哈') 手动抛出异常,终止包括生成器函数在内的一切后续执行
     const fn = function* () {
         console.log('a');
-        yeild 1;
+        yield 1;
         
         console.log('b');
-        yeild 2;
+        yield 2;
 
         console.log('c');
-        yeild 3;
+        yield 3;
     }
 
     let itor = fn();
@@ -70,13 +70,13 @@
     // 3. itor.return('xxx'), 结束生成器函数体的继续执行done:true, 返回值xxx赋值给value
     const fn = function* () {
         console.log('a');
-        yeild 1;
+        yield 1;
         
         console.log('b');
-        yeild 2;
+        yield 2;
 
         console.log('c');
-        yeild 3;
+        yield 3;
     }
 
     let itor = fn();
@@ -89,8 +89,8 @@
     // 4. 生成器函数的函数体执行时机
     const fn = function* (x) {
         console.log(100)
-        yeild 1;
-        yeild 2;
+        yield 1;
+        yield 2;
     }
 
     let itor = fn(); // 执行这一行后, fn内部不会被执行,所以100不会被打印, 只能执行itor的next()方法才会走进fn函数体内部
@@ -98,13 +98,13 @@
     ```
 
     ```
-    // 5. 生成器函数传参: itor.next(N): 每一次执行next方法, next方法传递的值会作为上一个yeild的返回值. (所以,第一次执行next方法传递的值是没有用的,因为在它之前没有yeild)
+    // 5. 生成器函数传参: itor.next(N): 每一次执行next方法, next方法传递的值会作为上一个yield的返回值. (所以,第一次执行next方法传递的值是没有用的,因为在它之前没有yield)
     const fn = function* (...params) {
         // ...params: [10, 20, 30]
-        let x = yeild 1;
+        let x = yield 1;
         console.log(x); // 'second: 222'
 
-        let y = yeild 2;
+        let y = yield 2;
         console.log(y)  // 'third: 333'
     }
 
@@ -117,15 +117,15 @@
     ```
     // 6.1 生成器函数嵌套
     const sum = function* (){
-        yeild 3;
-        yeild 4;
+        yield 3;
+        yield 4;
     }
     const fn = function* (x) {
-        let x = yeild 1;
+        let x = yield 1;
 
         sum();
 
-        let y = yeild 2;
+        let y = yield 2;
     }
 
     let itor = fn(10, 20, 30);
@@ -137,15 +137,15 @@
     ```
     // 6.2 生成器函数嵌套 - 等待嵌套函数执行完毕
     const sum = function* (){
-        yeild 3;
-        yeild 4;
+        yield 3;
+        yield 4;
     }
     const fn = function* (x) {
-        let x = yeild 1;
+        let x = yield 1;
 
-        yeild* sum(); // yeild后面带上*: 支持进入另一个生成器函数内部中去一步步执行, 不带*: 会当做普通函数,返回{done:false, value: sum函数}
+        yield* sum(); // yield后面带上*: 支持进入另一个生成器函数内部中去一步步执行, 不带*: 会当做普通函数,返回{done:false, value: sum函数}
 
-        let y = yeild 2;
+        let y = yield 2;
     }
 
     let itor = fn(10, 20, 30);
@@ -200,22 +200,22 @@
 
     //第三种方式: 基于generator生成器函数, 模拟await的语法, 实现请求的串行
     const handle = function* handle(){
-            let first = yeild dealy(1000);
+            let first = yield dealy(1000);
             console.log('第一个请求成功', first);
 
-            let second = yeild dealy(2000);
+            let second = yield dealy(2000);
             console.log('第二个请求成功', second);
 
-            let third = yeild dealy(3000);
+            let third = yield dealy(3000);
             console.log('第三个请求成功', third);
     }
 
     let itor = handle();
-    // done:是否执行完毕, value: 获取的是每一个yeild后面的值(这里是一个promise实例)
+    // done:是否执行完毕, value: 获取的是每一个yield后面的值(这里是一个promise实例)
     let {done, value} = itor.next();
     value.then(val=>{
         // val是第一次请求返回的结果 @@1000
-        let {done, value} = itor.next(val);// itor.next(val)执行,是把@@:1000当做参数传递给第一次yeild执行完的结果first, 所以会在控制台打印'第一个请求成功 @@1000'
+        let {done, value} = itor.next(val);// itor.next(val)执行,是把@@:1000当做参数传递给第一次yield执行完的结果first, 所以会在控制台打印'第一个请求成功 @@1000'
         value.then(val=>{
             // val是第二次请求返回的结果 @@2000
              let {done, value} = itor.next(val);
@@ -228,13 +228,13 @@
 
     // 第四种方式: 用递归的方式 改写一下方式三  --> async/await的原理
     const handle = function* handle(){
-            let first = yeild dealy(1000);
+            let first = yield dealy(1000);
             console.log('第一个请求成功', first);
 
-            let second = yeild dealy(2000);
+            let second = yield dealy(2000);
             console.log('第二个请求成功', second);
 
-            let third = yeild dealy(3000);
+            let third = yield dealy(3000);
             console.log('第三个请求成功', third);
     }
     const AsyncFunction  = function AsyncFunction(...params){
