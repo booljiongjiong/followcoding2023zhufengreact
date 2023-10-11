@@ -3,7 +3,7 @@
     - Iteator迭代器具有以下两个特点:
         - 拥有next方法用于遍历访问该数据结构所有成员
         - 每一次遍历返回的结果是一个对象{done:true/false, value:xxx}
-    - 拥有Symbol.iteator属性的数据结构,被称为可被遍历的,记忆基于forof循环处理
+    - 拥有Symbol.iteator属性的数据结构,被称为可被遍历的,基于forof循环处理
         - 数组  Array.prototype[Symbol(Symbol.iteator)] = function ...
         - 部分类数组: arguments/NodeList/HTMLCollection...
         - string
