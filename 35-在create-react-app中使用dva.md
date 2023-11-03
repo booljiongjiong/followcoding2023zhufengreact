@@ -6,7 +6,7 @@
 2. 在create-react-app基础上使用dva:
     - 本身可以使用`dva-cli`脚手架, 但是为了延续之前的脚手架, 继续使用create-react-app
     - 在安装create-react-app基础上, 还需要额外安装的内容:
-        - 可以安装antd的V5版本, 这样antd可以自动的按需导入(在V5之前不能自动,需要手动按需要导入)
+        - 可以安装antd的V5版本, 这样antd可以自动的按需导入(在V5之前不能自动,需要手动按需要导入, 之前的版本可以搭配使用`bebel-plugin-import`实现按需导入)
         - 无需安装: redux, redux-saga, react-redux, react-router-dom等, dva内部已经集成好了
             - react-router0dom使用的是v4版本, 所以只能使用v4版本的语法
             - redux使用的是V3
@@ -16,6 +16,8 @@
         - 其余的按照之前的配置方案去配置webpack, 包括less, 跨域代理, 兼容, 响应式布局等
 3. 使用dva
     ```
+    // 更加详细的使用方法参考: react18全家桶-全套课程讲义\03淘系方案\day1231_createreactapp
+
     import dva from 'dva'
     import createHistory from 'history/createHashHistory'
     import RouterConfig from './router'
