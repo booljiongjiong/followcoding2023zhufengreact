@@ -24,7 +24,7 @@
 4. Generator生成器函数的作用:
     - 可以基于返回的itor(迭代器对象),基于next方法, 控制函数体中的代码,一步步的去执行
     - 每一次执行next, 控制函数体中的代码执行, 直到遇到yield则暂停执行下面的代码,等待下一个next被调用,然后从上一次暂停的位置开始执行
-        - itor.next() // {done:true/false, value: yield后面的值}
+        - itor.next() // {done:true/false, value: yield后面的值 !!}
     - 直到遇到函数体的return或者已经执行到函数最末尾的位置了, 返回 {done:true, value: 函数返回值或者undefined}
     ```
     // 1. 生成器函数和yield执行流程
